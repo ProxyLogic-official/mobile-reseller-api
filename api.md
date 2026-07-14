@@ -1,6 +1,6 @@
-# ProxyLogic Mobile API — reseller client guide
+# ProxyLogic Mobile API
 
-This is the shareable integration document for reseller clients.
+
 
 ## Connection details
 
