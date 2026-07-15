@@ -1,5 +1,4 @@
-# ProxyLogic Mobile API
-
+# ProxyLogic Mobile API â€” reseller guide
 
 
 ## Connection details
@@ -30,7 +29,7 @@ Content-Type: application/json
 Idempotency-Key: your-unique-operation-key
 ```
 
-The idempotency key must be 8–100 characters. Generate one stable key for each checkout or
+The idempotency key must be 8â€“100 characters. Generate one stable key for each checkout or
 user action. Retrying the same request with the same key is safe. Reusing a key with a changed
 body returns `409 IDEMPOTENCY_CONFLICT`.
 
@@ -100,15 +99,14 @@ curl -sS https://api.mobile.proxylogic.org/v1/account \
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response — `200 OK`:
+Response â€” `200 OK`:
 
 ```json
 {
   "balance": "350.0000",
   "currency": "USD",
   "pricing": {
-    "mobile_per_port_day": "2.5000",
-    "premium_mobile_per_port_day": "3.5000"
+    "mobile_per_port_day": "2.5000"
   }
 }
 ```
@@ -116,21 +114,21 @@ Response — `200 OK`:
 Purchase charge:
 
 ```text
-ports × days × current applicable per-port/day price
+ports Ã— days Ã— current per-port/day price
 ```
 
 The complete charge is reserved when a purchase or extension is accepted.
 
 ## Account ledger
 
-`limit` is optional, defaults to `50`, and accepts `1`–`200`.
+`limit` is optional, defaults to `50`, and accepts `1`â€“`200`.
 
 ```bash
 curl -sS "https://api.mobile.proxylogic.org/v1/account/ledger?limit=50" \
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response — `200 OK`:
+Response â€” `200 OK`:
 
 ```json
 {
@@ -164,9 +162,7 @@ curl -sS https://api.mobile.proxylogic.org/v1/mobile/availability/locations \
     {
       "name": "California",
       "code": "CA",
-      "available_ports": 42,
-      "connection_types": {"mobile": 30, "wifi": 12},
-      "protocols": {"https": 20, "socks5": 22}
+      "available_ports": 30
     }
   ]
 }
@@ -201,15 +197,12 @@ curl -sS -X POST https://api.mobile.proxylogic.org/v1/mobile/orders \
   -H "Idempotency-Key: checkout-84721" \
   -H "Content-Type: application/json" \
   -d '{
-    "connection_type":"4G_MOBILE",
     "ports":2,
     "days":30,
     "protocol":"SOCKS5",
     "whitelist_ip":"203.0.113.25",
     "ip_rotation":true,
-    "location":"CA",
-    "carrier":"RANDOM",
-    "premium_rotation":false
+    "location":"CA"
   }'
 ```
 
@@ -217,15 +210,18 @@ Request fields:
 
 | Field | Accepted values |
 | --- | --- |
-| `connection_type` | `4G_MOBILE`, `WIFI`, `MIX_4G_WIFI`, `CARRIER` |
-| `ports` | Integer `1`–`25` |
-| `days` | Integer `1`–`31` |
+| `ports` | Integer `1`â€“`25` |
+| `days` | Integer `1`â€“`31` |
 | `protocol` | `HTTPS` or `SOCKS5` |
 | `whitelist_ip` | Public IPv4 address used to access the ports |
 | `ip_rotation` | Boolean; `true` selects normal rotation |
 | `location` | `RANDOM` or two-letter US state code |
-| `carrier` | `RANDOM`, `ATT`, `TMOBILE`, or `VERIZON` |
-| `premium_rotation` | Boolean; premium price applies when `true` |
+
+Every purchase is 4G mobile with random-carrier allocation. `connection_type` and `carrier` are
+internal fixed settings and must not be sent in the reseller request. A specific location can be
+selected during purchase. Location
+can be changed after activation at minimum 30-minute intervals; carrier cannot be changed after
+placement.
 
 Poll the returned operation. A successful purchase has an order object in `result`:
 
@@ -242,7 +238,6 @@ Poll the returned operation. A successful purchase has an order object in `resul
   "rotation_time": "30",
   "location": "CA",
   "carrier": "RANDOM",
-  "premium_rotation": false,
   "original_charge": "150.0000",
   "extension_charges": "0.0000",
   "refund_total": "0.0000",
@@ -262,14 +257,14 @@ Use every returned port. Never assume ports are consecutive or returned as a sin
 Optional query parameters:
 
 - `status`: for example `ACTIVE` or `CANCELED`.
-- `limit`: `1`–`200`, default `100`.
+- `limit`: `1`â€“`200`, default `100`.
 
 ```bash
 curl -sS "https://api.mobile.proxylogic.org/v1/mobile/orders?status=ACTIVE&limit=100" \
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response — `200 OK`: a JSON array of order objects. An account with no matching orders returns
+Response â€” `200 OK`: a JSON array of order objects. An account with no matching orders returns
 `[]`.
 
 ## Get one order
@@ -292,7 +287,7 @@ curl -sS -X POST https://api.mobile.proxylogic.org/v1/mobile/orders/ORDER_ID/ext
   -d '{"days":7}'
 ```
 
-`days` accepts `1`–`31`. The current applicable price is used. Successful operation result:
+`days` accepts `1`â€“`31`. The current applicable price is used. Successful operation result:
 
 ```json
 {
@@ -383,8 +378,8 @@ curl -sS -X PATCH \
   -d '{"rotation":"10"}'
 ```
 
-`rotation` accepts `TRUE`, `FALSE`, `5`, `10`, or `30`. Short rotation values require a premium
-order. `TRUE` means standard rotation; `FALSE` means extended rotation.
+`rotation` accepts only `TRUE` or `FALSE`. `TRUE` means standard 30-minute rotation; `FALSE`
+means extended rotation.
 
 ```json
 {
