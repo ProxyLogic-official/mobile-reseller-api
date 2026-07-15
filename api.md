@@ -99,7 +99,7 @@ curl -sS https://api.mobile.proxylogic.org/v1/account \
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response â€” `200 OK`:
+Response  `200 OK`:
 
 ```json
 {
@@ -114,7 +114,7 @@ Response â€” `200 OK`:
 Purchase charge:
 
 ```text
-ports Ã— days Ã— current per-port/day price
+ports  days  current per-port/day price
 ```
 
 The complete charge is reserved when a purchase or extension is accepted.
@@ -128,7 +128,7 @@ curl -sS "https://api.mobile.proxylogic.org/v1/account/ledger?limit=50" \
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response â€” `200 OK`:
+Response  `200 OK`:
 
 ```json
 {
@@ -264,7 +264,7 @@ curl -sS "https://api.mobile.proxylogic.org/v1/mobile/orders?status=ACTIVE&limit
   -H "X-API-Key: CUSTOMER_API_KEY"
 ```
 
-Response â€” `200 OK`: a JSON array of order objects. An account with no matching orders returns
+Response  `200 OK`: a JSON array of order objects. An account with no matching orders returns
 `[]`.
 
 ## Get one order
