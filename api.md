@@ -29,7 +29,7 @@ Content-Type: application/json
 Idempotency-Key: your-unique-operation-key
 ```
 
-The idempotency key must be 8100 characters. Generate one stable key for each checkout or
+The idempotency key must be 100 characters. Generate one stable key for each checkout or
 user action. Retrying the same request with the same key is safe. Reusing a key with a changed
 body returns `409 IDEMPOTENCY_CONFLICT`.
 
