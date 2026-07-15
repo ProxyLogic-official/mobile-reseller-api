@@ -29,7 +29,7 @@ Content-Type: application/json
 Idempotency-Key: your-unique-operation-key
 ```
 
-The idempotency key must be 8â€“100 characters. Generate one stable key for each checkout or
+The idempotency key must be 8100 characters. Generate one stable key for each checkout or
 user action. Retrying the same request with the same key is safe. Reusing a key with a changed
 body returns `409 IDEMPOTENCY_CONFLICT`.
 
@@ -121,7 +121,7 @@ The complete charge is reserved when a purchase or extension is accepted.
 
 ## Account ledger
 
-`limit` is optional, defaults to `50`, and accepts `1`â€“`200`.
+`limit` is optional, defaults to `50`, and accepts `1``200`.
 
 ```bash
 curl -sS "https://api.mobile.proxylogic.org/v1/account/ledger?limit=50" \
@@ -210,8 +210,8 @@ Request fields:
 
 | Field | Accepted values |
 | --- | --- |
-| `ports` | Integer `1`â€“`25` |
-| `days` | Integer `1`â€“`31` |
+| `ports` | Integer `1``25` |
+| `days` | Integer `1``31` |
 | `protocol` | `HTTPS` or `SOCKS5` |
 | `whitelist_ip` | Public IPv4 address used to access the ports |
 | `ip_rotation` | Boolean; `true` selects normal rotation |
@@ -257,7 +257,7 @@ Use every returned port. Never assume ports are consecutive or returned as a sin
 Optional query parameters:
 
 - `status`: for example `ACTIVE` or `CANCELED`.
-- `limit`: `1`â€“`200`, default `100`.
+- `limit`: `1``200`, default `100`.
 
 ```bash
 curl -sS "https://api.mobile.proxylogic.org/v1/mobile/orders?status=ACTIVE&limit=100" \
@@ -287,7 +287,7 @@ curl -sS -X POST https://api.mobile.proxylogic.org/v1/mobile/orders/ORDER_ID/ext
   -d '{"days":7}'
 ```
 
-`days` accepts `1`â€“`31`. The current applicable price is used. Successful operation result:
+`days` accepts `1``31`. The current applicable price is used. Successful operation result:
 
 ```json
 {
