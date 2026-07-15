@@ -1,4 +1,4 @@
-# ProxyLogic Mobile API â€” reseller guide
+# ProxyLogic Mobile API reseller guide
 
 
 ## Connection details
